@@ -20,12 +20,25 @@ $("#searchBtn").on("click", function(e){
     }).then(function(response) {
         console.log(response);
         let temp = ((response.main.temp - 273.15) * 1.80 + 32).toFixed(2);
-        let cityName = $("<h1>").text(response.name);
+        let cityName = response.name;
+        let cityTag = $("<h1>").text(cityName);
         let currTemp = $("<p>").text(`Temperature: ${temp}`)
         let humidity = $("<p>").text(`Humidity: ${response.main.humidity}`);
         let windSpeed = $("<p>").text(`Wind speed: ${response.wind.speed}`);
         let br = $("<br>");
         
-        $("#displayResults").append(cityName, br, currTemp, humidity, windSpeed);
+        $("#displayResults").append(cityTag, br, currTemp, humidity, windSpeed);
+
+        fiveDayForecast(cityName);
     });
 });
+
+function fiveDayForecast(city) {
+    let queryURL = `https://api.openweathermap.org/data/2.5/forecast/daily?q=${city}&mode=xml&units=metric&cnt=7&appid=f53d3bed696d22da625060991087f2e7`;
+    $.ajax({
+        url: queryURL,
+        method: "GET"
+    }).then(function(response) {
+        console.log(response);
+    });
+};
