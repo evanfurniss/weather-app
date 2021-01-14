@@ -26,19 +26,34 @@ $("#searchBtn").on("click", function(e){
         let humidity = $("<p>").text(`Humidity: ${response.main.humidity}`);
         let windSpeed = $("<p>").text(`Wind speed: ${response.wind.speed}`);
         let br = $("<br>");
-        
-        $("#displayResults").append(cityTag, br, currTemp, humidity, windSpeed);
+        let uv = uvIndex(response.coord.lat, response.coord.lon);
+        console.log(uv);
 
         fiveDayForecast(cityName);
+        $("#displayResults").append(cityTag, br, currTemp, humidity, windSpeed, uv);
     });
 });
 
 function fiveDayForecast(city) {
-    let queryURL = `https://api.openweathermap.org/data/2.5/forecast/daily?q=${city}&mode=xml&units=metric&cnt=7&appid=f53d3bed696d22da625060991087f2e7`;
+    let queryURL = `https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=f53d3bed696d22da625060991087f2e7`;
     $.ajax({
         url: queryURL,
         method: "GET"
     }).then(function(response) {
         console.log(response);
     });
+};
+
+function uvIndex (lat, lon) {
+    let queryURL = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&exclue=minutely,hourly,daily,alerts&appid=f53d3bed696d22da625060991087f2e7`
+    let uv;
+
+    $.ajax({
+        url: queryURL,
+        method: "GET"
+    }).then(function(response) {
+        uv = response.current.uvi;
+        console.log(response.current.uvi);
+    });
+    console.log(uv);
 };
