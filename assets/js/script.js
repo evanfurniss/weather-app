@@ -19,5 +19,13 @@ $("#searchBtn").on("click", function(e){
         method: "GET"
     }).then(function(response) {
         console.log(response);
+        let temp = ((response.main.temp - 273.15) * 1.80 + 32).toFixed(2);
+        let cityName = $("<h1>").text(response.name);
+        let currTemp = $("<p>").text(`Temperature: ${temp}`)
+        let humidity = $("<p>").text(`Humidity: ${response.main.humidity}`);
+        let windSpeed = $("<p>").text(`Wind speed: ${response.wind.speed}`);
+        let br = $("<br>");
+        
+        $("#displayResults").append(cityName, br, currTemp, humidity, windSpeed);
     });
 });
