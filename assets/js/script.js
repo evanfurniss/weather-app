@@ -1,11 +1,15 @@
 onLoad();
 
 function onLoad() {
-    let headBanner = $("<h1>").text("Weather App").attr("class", "notification");
-    $("#headerApp").append(headBanner);
+    // let headBanner = $("<h1>").text("Weather App").attr("class", "notification center");
+    $("#headerApp").text("Weather App").attr("class", "center title");
 
-    let searchBtn = $("<button>").text("Search").attr("id", "searchBtn");
-    let searchBar = $("<input>").attr("placeholder", "City Name");
+    let searchBtn = $("<button>").text("Search").attr({
+        id: "searchBtn"
+    });
+    let searchBar = $("<input>").attr({
+        placeholder: "City Name"
+    });
     $("#searchCity").append(searchBar, searchBtn);
 }
 
@@ -25,12 +29,13 @@ $("#searchBtn").on("click", function(e){
         let currTemp = $("<p>").text(`Temperature: ${temp}`)
         let humidity = $("<p>").text(`Humidity: ${response.main.humidity}`);
         let windSpeed = $("<p>").text(`Wind speed: ${response.wind.speed}`);
+        let container = $("<div>").append(currTemp, humidity, windSpeed).attr("class", "subtitle notification");
         let br = $("<br>");
         let uv = $("<p>").text(uvIndex(`UV Index: ${response.coord.lat, response.coord.lon}`));
         console.log(uv);
 
         fiveDayForecast(cityName);
-        $("#displayResults").append(cityTag, br, currTemp, humidity, windSpeed, uv);
+        $("#displayResults").append(cityTag, br, container);
     });
 });
 
