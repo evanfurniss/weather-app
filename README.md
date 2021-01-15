@@ -1,5 +1,11 @@
 # Weather App
 
+## Links
+
+Repo: https://github.com/evanfurniss/weather-app
+
+Live link: https://evanfurniss.github.io/weather-app/
+
 ## Overview
 
 This app was created to allow users to search for a location via city name. Upon clicking search, the user will be given the current weather status, including temperature, humidity, wind speed, and UV index. The user is also given a five day forecast for the location which include temperature and humidity. When the user searches for a city, a list of recently searched items will appear below the search bar, which the user may click to pull the temperature information for previously searched results.
