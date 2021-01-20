@@ -12,6 +12,12 @@ function onLoad() {
     displayHistory();
 }
 
+setDate();
+function setDate() {
+    var date = dayjs();
+    return date.format("MM/DD/YYYY");
+}
+
 function setPastSearches(city) {
     localStorage.setItem("cities", JSON.stringify(city));
 }
@@ -43,9 +49,16 @@ function todaysWeather(city) {
         url: queryURL,
         method: "GET"
     }).then(function(response) {
+        console.log(response);
         let temp = ((response.main.temp - 273.15) * 1.80 + 32).toFixed(2);
         let cityName = response.name;
-        let cityTag = $("<h1>").text(cityName).attr("class", "title");
+        let date = setDate();
+        let icon = $("<i>");
+        if (response.weather[0].main === "Clouds") {
+            icon.attr("class", "fas fa-cloud")
+        };
+        let cityTag = $("<h1>").text(`${cityName} ${date} `).attr("class", "title");
+        cityTag.append(icon);
         let currTemp = $("<p>").text(`Temperature: ${temp}`)
         let humidity = $("<p>").text(`Humidity: ${response.main.humidity}`);
         let windSpeed = $("<p>").text(`Wind speed: ${response.wind.speed}`);
